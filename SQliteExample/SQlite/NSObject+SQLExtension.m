@@ -6,7 +6,9 @@
 //  Copyright © 2016年 demoDu. All rights reserved.
 //
 
-#import "NSObject+SQLExtension.h" 
+#import "NSObject+SQLExtension.h"  
+
+
 NSString *const typeInt_ = @"i";
 NSString *const typeShort_ = @"s";
 NSString *const tyoeFloat_ = @"f";
@@ -19,8 +21,12 @@ NSString *const typeBool_ = @"b";
 
 
 @implementation SQLProperty
--(instancetype)initWithIvar:(Ivar)ivar{
+-(instancetype)initWithIvar:(Ivar)ivar class:(__unsafe_unretained Class)c{
     if (self= [super init]) {
+        
+        
+        _modelClass = c;
+        
          //属性名字
         NSMutableString *key  = [NSMutableString stringWithUTF8String:ivar_getName(ivar)];
         [key replaceCharactersInRange:NSMakeRange(0, 1) withString:@""];
@@ -29,7 +35,6 @@ NSString *const typeBool_ = @"b";
         
         //属性类型
          _type  = [NSMutableString  stringWithUTF8String:ivar_getTypeEncoding(ivar)];
-        
         
         
         //对象类型
@@ -61,23 +66,19 @@ NSString *const typeBool_ = @"b";
         //get 方法
         _getSel = NSSelectorFromString(_propertyName);
         
-        if ([key isEqualToString:@"desc"]) {
-            _propertyName = (NSMutableString *) @"description";
-        }
-        if ([key isEqualToString:@"ID"]) {
-            _propertyName = (NSMutableString *) @"id";
-        }
+      
         
         //处理set方法
-            NSString *cap = [key substringToIndex:1];
-            cap = cap.uppercaseString;
+            NSString *cap = [key substringToIndex:1].uppercaseString;
             [key replaceCharactersInRange:NSMakeRange(0, 1) withString:cap];
             [key insertString:@"set" atIndex:0];
             [key appendString:@":"];
             _setSel = NSSelectorFromString(key);
         
         
-      
+        
+  
+  
     }
     return self;
 }
@@ -85,8 +86,23 @@ NSString *const typeBool_ = @"b";
 
 @end
 
-
 @implementation NSObject (SQLExtension)
+
+- (void)propertyKey:(NSString **)key{
+    
+    if ([self.class respondsToSelector:@selector(replacePropertyName)]) {
+        
+        NSString *replaceName = [self.class replacePropertyName][*key];
+        
+        if (replaceName) {
+            *key = replaceName;
+            
+        }
+    }
+ 
+}
+
+
 - (void)enumerateProperty:(void(^)(SQLProperty *property))block{
     
     Class c = self.class;
@@ -100,7 +116,8 @@ NSString *const typeBool_ = @"b";
         }
         Ivar ivar = ivars[i];
         
-        SQLProperty *property = [[SQLProperty alloc] initWithIvar:ivar];
+        SQLProperty *property = [[SQLProperty alloc] initWithIvar:ivar class:c];
+        
       
         if (block) {
             block(property);
@@ -133,11 +150,14 @@ NSString *const typeBool_ = @"b";
         
         SEL selector = property.setSel;
         
+        [self propertyKey:&key];
+        
+        
         id value = dict[key];
         if (value == nil) {
             return ;
         }
- 
+      
         Class valueClass =  [value class];
         
         //是模型类型
@@ -145,7 +165,7 @@ NSString *const typeBool_ = @"b";
             id obj = [classType new];
             [obj objcKeyValue:value];
             ((void(*)(id,SEL,Class))(void *)objc_msgSend)(self,selector,obj);
-        }else{
+        }else{  
             //其他类型  (包含NSArray 等等的类型)
             ((void(*)(id,SEL,id))(void *)objc_msgSend)(self,selector,value);
         }
@@ -244,6 +264,7 @@ NSString *const typeBool_ = @"b";
         
         NSString *key = property.propertyName;
         Class  classType = property.ClassType;
+        
         id value = nil;
         
         if (classType) {
@@ -274,7 +295,6 @@ NSString *const typeBool_ = @"b";
 }
 
 
-
 -(instancetype)objcValuekey:(id)dict{
      if ([dict class]==[NSString class]) {
       dict =   [NSJSONSerialization JSONObjectWithData:[((NSString *)dict) dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
@@ -288,6 +308,8 @@ NSString *const typeBool_ = @"b";
     return [self valueKey];
     
 }
+
+
 
 
 @end

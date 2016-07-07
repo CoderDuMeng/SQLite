@@ -33,7 +33,13 @@ extern NSString *const typeShort_;
 
 @interface SQLProperty : NSObject
 
--(instancetype)initWithIvar:(Ivar )ivar;
+-(instancetype)initWithIvar:(Ivar )ivar class:(Class )c;
+
+/**
+ *  转模型的类 
+ */
+@property (assign , nonatomic , readonly) Class modelClass;
+
 
 /**
  *  属性的名字  
@@ -75,10 +81,41 @@ extern NSString *const typeShort_;
  */
 
 @interface NSObject (SQLExtension)
-
+/**
+ *  字典转模型
+ *
+ *  @param dict  传入字典 或者的json 字符串
+ *
+ *  @return 返回转换完的对象
+ */
 -(instancetype)objcValuekey:(id)dict;
 
+
+/**
+ *  模型对象 转换成字典
+ *
+ *  @return 返回转好的字典
+ */
 -(NSMutableDictionary *)objcKeyValue;
+
+
+/**
+ *  有那些属性需要替换名字的 
+ {
+   要替换的名字 ： 字典的对应的key
+ }
+ *
+ *  @return 返回要替换的key
+ */
++(NSDictionary *)replacePropertyName;
+
+//这里是会报警告的代码
+
+
+
+
+
+
 
 - (BOOL)isNoClass;
 

@@ -20,4 +20,9 @@
 @property (copy   , nonatomic)  NSString *girlfriend;
 @property (assign , nonatomic)  CGFloat  price;
 
+@property (copy , nonatomic) NSString *ID;
+@property (copy , nonatomic) NSString *age1;
+@property (assign , nonatomic)NSString *age2;
+
+
 @end

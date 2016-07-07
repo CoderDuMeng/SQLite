@@ -8,6 +8,7 @@
 #import "Persion.h"
 #import "SQLObject.h"    //存储管理    分类
 #import "SQLiteTool.h"  
+#import "NSObject+SQLExtension.h"
 
 //以下方法自己调用试试
 
@@ -54,6 +55,14 @@ void getObjectAll(){
    NSArray *objects = [Persion dd_getAllData];
    
    NSLog(@"获取全部数据  %@",objects);
+    
+ 
+    for (Persion *per in objects) {
+        
+        NSLog(@"%@",[per objcKeyValue]);
+        
+        
+    }
     
    
 }
@@ -180,6 +189,23 @@ int main(int argc, const char * argv[]) {
         
         
         
+        sleep(2);
+        
+        
+        //替换属性
+        NSDictionary *dcit = @{
+                               @"id":@"dumeng",
+                               @"id1":@"我是id1",
+                               @"id2":@"我是id2"
+                               
+                               
+                               };
+        
+        Persion *per = [[Persion alloc] init];
+        
+         per =  [per objcValuekey:dcit];
+        
+        NSLog(@"ID :  %@ age1 :  %@  age2 :%@",per.ID, per.age1, per.age2);
         
         
         

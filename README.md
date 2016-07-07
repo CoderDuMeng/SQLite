@@ -57,9 +57,43 @@ if (isyes) {
 NSLog(@"删除成功");
 }else{
 NSLog(@"删除失败");
-}   
-// 7.更新数据 直接用对应的key在存一下就完全可以
+} 
+
+
+// 7.支持在model类中实现属性替换
++(NSDictionary *)replacePropertyName{
+
+return @{@"ID" : @"id",
+@"age1":@"id1",
+@"age2":@"id2"
+
+};
+
+}
+//替换属性
+NSDictionary *dcit = @{
+@"id":@"dumeng",
+@"id1":@"我是id1",
+@"id2":@"我是id2"
+
+
+};
+
+Persion *per = [[Persion alloc] init];
+
+per =  [per objcValuekey:dcit];
+
+NSLog(@"ID :  %@ age1 :  %@  age2 :%@",per.ID, per.age1, per.age2);
+
+
+//其实这个还可以做简单的数据转模型
+
+
+
+
+// 8.更新数据 直接用对应的key在存一下就完全可以
 ```
+ 
 
 
  
