@@ -24,5 +24,33 @@
 @property (copy , nonatomic) NSString *age1;
 @property (assign , nonatomic)NSString *age2;
 
+@property (copy  , nonatomic) NSString *url;
+
+@property (strong  , nonatomic) NSURL *urls;
+
+
+@property (strong , nonatomic) NSArray *models;
+
+@property (assign , nonatomic) char c1;
+
+@property (strong, nonatomic) NSDate *date;
+@property (copy, nonatomic) NSString *dates;
+
+
+
+//@property (assign ,nonatomic) unsigned long long unsignedvalueLongLong;
+//@property (assign ,nonatomic) unsigned long  unsignedvalueLong;
+//
+//@property  unsigned char unsignedCharValue;
+//@property  unsigned short unsignedShortValue;
+//@property  unsigned int unsignedIntValue;
+
 
 @end
+
+
+
+
+
+
+

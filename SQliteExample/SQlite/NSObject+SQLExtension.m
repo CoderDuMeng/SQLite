@@ -24,7 +24,6 @@ NSString *const typeBool_ = @"b";
 -(instancetype)initWithIvar:(Ivar)ivar class:(__unsafe_unretained Class)c{
     if (self= [super init]) {
         
-        
         _modelClass = c;
         
          //属性名字
@@ -34,30 +33,35 @@ NSString *const typeBool_ = @"b";
         _propertyName = [key copy];
         
         //属性类型
-         _type  = [NSMutableString  stringWithUTF8String:ivar_getTypeEncoding(ivar)];
+         NSMutableString *type  = [NSMutableString  stringWithUTF8String:ivar_getTypeEncoding(ivar)];
         
         
+        _type = [type mutableCopy];
         //对象类型
-        if ([_type hasSuffix:@"@"]) {
-            _type =  [_type substringWithRange:NSMakeRange(2, _type.length-3)];
+        if ([type hasPrefix:@"@"]) {
+            _type =  [type substringWithRange:NSMakeRange(2, type.length-3)];
+            
             _ClassType = NSClassFromString(_type);
-            if (_ClassType!=[NSArray class]||
-                _ClassType != [NSMutableArray class] ||
-                _ClassType != [NSString class] ||
-                _ClassType != [NSMutableString class] ||
-                _ClassType != [NSMutableDictionary class]||
-                _ClassType != [NSDictionary class]||
-                _ClassType != [NSData class] ||
-                _ClassType != [NSMutableData class] ||
-                _ClassType != [NSMutableSet class] ||
-                _ClassType != [NSSet class] ||
-                _ClassType != [NSNumber class] ||
-                _ClassType != [NSURL class]
+            
+            
+            if (_ClassType ==  [NSArray class]||
+                _ClassType ==  [NSMutableArray class] ||
+                _ClassType ==  [NSString class] ||
+                _ClassType ==  [NSMutableString class] ||
+                _ClassType ==  [NSMutableDictionary class]||
+                _ClassType ==  [NSDictionary class]||
+                _ClassType ==  [NSData class] ||
+                _ClassType ==  [NSMutableData class] ||
+                _ClassType ==  [NSMutableSet class] ||
+                _ClassType ==  [NSSet class] ||
+                _ClassType ==  [NSNumber class] ||
+                _ClassType ==  [NSURL class] ||
+                _ClassType ==  [NSDate class]
                 
                 ) {
-                _isModelClass = YES;
+                _isModelClass = NO;   //不是模型类
             }else{
-                _isModelClass = NO;
+                _isModelClass = YES;   //是模型类
                 
             }
      
@@ -93,6 +97,7 @@ NSString *const typeBool_ = @"b";
     if ([self.class respondsToSelector:@selector(replacePropertyName)]) {
         
         NSString *replaceName = [self.class replacePropertyName][*key];
+        
         
         if (replaceName) {
             *key = replaceName;
@@ -141,75 +146,98 @@ NSString *const typeBool_ = @"b";
     
     
     [self enumerateProperty:^(SQLProperty *property) {
-        
         NSString *key = property.propertyName;
-        
         NSString *type = property.type;
-     
         Class classType  = property.ClassType;
-        
         SEL selector = property.setSel;
-        
         [self propertyKey:&key];
-        
         
         id value = dict[key];
         if (value == nil) {
             return ;
         }
-      
-        Class valueClass =  [value class];
+        
+        if (classType) {
         
         //是模型类型
-        if (property.isModelClass && (valueClass==[NSMutableDictionary class] || valueClass==[NSDictionary class])) {
+        if (property.isModelClass && ([value isKindOfClass:[NSMutableDictionary class]]||[value isKindOfClass:[NSDictionary class]])) {
             id obj = [classType new];
             [obj objcKeyValue:value];
             ((void(*)(id,SEL,Class))(void *)objc_msgSend)(self,selector,obj);
-        }else{  
-            //其他类型  (包含NSArray 等等的类型)
-            ((void(*)(id,SEL,id))(void *)objc_msgSend)(self,selector,value);
+        }else{
+            if (classType==[NSString class] && [value isKindOfClass:[NSURL class]]) {
+                NSURL *urlStirngValue = (NSURL *)value;
+                ((void(*)(id,SEL,NSString *))(void *)objc_msgSend)(self,selector,urlStirngValue.absoluteString);
+            }else if ([value isKindOfClass:[NSString class]] && classType == [NSURL class]){
+                NSURL *urlValue = (NSURL *)value;
+                ((void(*)(id,SEL,NSURL *))(void *)objc_msgSend)(self,selector,urlValue);
+            }else if(classType==[NSDate class] && [value isKindOfClass:[NSString class]]){
+                {
+                NSDateFormatter *formatter = [NSDateFormatter  new];
+                formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+                NSDate *date =  [formatter dateFromString:(NSString *)value];
+                if (date) {
+                  ((void(*)(id,SEL,NSDate *))(void *)objc_msgSend)(self,selector,date);
+                }
+                }
+                {
+                NSDateFormatter *formatter = [NSDateFormatter  new];
+                formatter.dateFormat = @"yyyy-MM-dd ";
+                NSDate *date =  [formatter dateFromString:(NSString *)value];
+                if (date) {
+                ((void(*)(id,SEL,NSDate *))(void *)objc_msgSend)(self,selector,date);
+                }
+                }
+                {
+                NSDateFormatter *formatter = [NSDateFormatter  new];
+                formatter.dateFormat = @"HH:mm:ss";
+                NSDate *date =  [formatter dateFromString:(NSString *)value];
+                if (date) {
+                ((void(*)(id,SEL,NSDate *))(void *)objc_msgSend)(self,selector,date);
+                }
+                
+            }
+                
+            }else{
+                ((void(*)(id,SEL,id))(void *)objc_msgSend)(self,selector,value);
+            }
+            
         }
+    
+        }else{
         
         if ([type isEqualToString:typeInt_]) {
-            
-            ((void(*)(id,SEL,int))(void *)objc_msgSend)(self,selector,[value intValue]);
-            
+           ((void(*)(id,SEL,int))(void *)objc_msgSend)(self,selector,[value intValue]);
         }else if ([type isEqualToString:tyoeFloat_]){
-            
             ((void(*)(id,SEL,float))(void *)objc_msgSend)(self,selector,[value floatValue]);
-            
-            
         }else if ([type isEqualToString:typeDouble_]){
-            
             ((void(*)(id,SEL,double))(void *)objc_msgSend)(self,selector,[value doubleValue]);
-         
         }else if ([type isEqualToString:typeBool_]){
-            
-            ((void(*)(id,SEL,BOOL))(void *)objc_msgSend)(self,selector,[value boolValue]);
-            
+            if ([value isKindOfClass:[NSString class]]) {
+                if ([value isEqualToString:@"YES"] || [value isEqualToString:@"yes"]) {
+                    ((void(*)(id,SEL,BOOL))(void *)objc_msgSend)(self,selector,YES);
+                }else if ([value isEqualToString:@"true"] || [value isEqualToString:@"NO"] || [value isEqualToString:@"no"]){
+                    ((void(*)(id,SEL,BOOL))(void *)objc_msgSend)(self,selector,NO);
+                }
+            }else{
+                ((void(*)(id,SEL,BOOL))(void *)objc_msgSend)(self,selector,[value boolValue]);
+            }
+           
         }else if ([type isEqualToString:typeLongLong_]){
-            
              ((void(*)(id,SEL,long long))(void *)objc_msgSend)(self,selector,[value longLongValue]);
-            
-            
         }else if ([type isEqualToString:typeChar_]){
-            if (valueClass == [NSNumber class]) {
-                
+            if ([value isKindOfClass:[NSNumber class]]) {
                 ((void(*)(id,SEL,char))(void *)objc_msgSend)(self,selector,[value charValue]);
-                
-            }else if (valueClass==[NSString class]){
-                
+            }else if ([value isKindOfClass:[NSString class]]){
                 NSString *charStr = (NSString *) value;
-                
                ((void(*)(id,SEL,char))(void *)objc_msgSend)(self,selector,(char )charStr.UTF8String);
             }
-         
         }else if ([type isEqualToString:typeLong_]){
-            
             ((void(*)(id,SEL,long))(void *)objc_msgSend)(self,selector,[value longValue]);
-
         }
-
+    
+        }
+        
     }];
     
     return self;
@@ -226,7 +254,11 @@ NSString *const typeBool_ = @"b";
              @"NSMutableSet",
              @"NSSet",
              @"NSNumber",
-             @"NSURL"
+             @"NSURL",
+             @"NSData",
+             @"NSMutableData",
+             @"NSDate"
+             
              ];
  
 }
@@ -257,7 +289,6 @@ NSString *const typeBool_ = @"b";
 
     if ([self isNoClass]) return nil;
     
-    
   __block   NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
     [self enumerateProperty:^(SQLProperty *property) {
@@ -267,26 +298,19 @@ NSString *const typeBool_ = @"b";
         
         id value = nil;
         
-        if (classType) {
-            if (property.isModelClass) {  //如果是模型对象类型
-                id model = [self valueForKey:key];
-                value = [model valueKey];
-                
-            }
-            if (classType==[NSURL class]) {
-                NSURL * url = [self valueForKey:key];
-                value = (NSString *) url.absoluteString;
-            }
+        if (classType&&property.isModelClass) { //模型属性
+            
+              id model = [self valueForKey:key];
+              value = [model valueKey];
+            
         }else{
-            //基本数据类型
-            
             value = [self valueForKey:key];
-            
         }
         
     //赋值
-        dict[key] = value;
-        
+        if (value!=nil && value != [NSNull null] ) {
+         dict[key] = value;
+        }
     }];
   
     return dict;
@@ -309,6 +333,9 @@ NSString *const typeBool_ = @"b";
     
 }
 
++(NSDictionary *)replacePropertyName{
+    return nil;
+}
 
 
 

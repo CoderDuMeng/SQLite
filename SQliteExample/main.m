@@ -191,12 +191,19 @@ int main(int argc, const char * argv[]) {
         
         sleep(2);
         
-        
+        //2016-07-15 01:03:30 +0000
         //替换属性
         NSDictionary *dcit = @{
+                               @"age":@"1412412",
                                @"id":@"dumeng",
                                @"id1":@"我是id1",
-                               @"id2":@"我是id2"
+                               @"id2":@"我是id2",
+                               @"url":[NSURL URLWithString:@"www.baidu.com"],
+                               @"urls":@"www.baidu.com",
+                               @"models":@[@"1",@"12",@"1241"],
+                               @"c1" : @"1",
+                               @"date":@"2016-07-15 01:03:30",
+                               @"dates":[NSDate date]
                                
                                
                                };
@@ -205,7 +212,13 @@ int main(int argc, const char * argv[]) {
         
          per =  [per objcValuekey:dcit];
         
-        NSLog(@"ID :  %@ age1 :  %@  age2 :%@",per.ID, per.age1, per.age2);
+        NSLog(@"ID :  %@ age1 :  %@  age2 :%@  age %zi  url:%@  urls %@ models %@",per.ID, per.age1, per.age2,per.age,per.url,per.urls, per.models);
+        
+        
+        
+        
+        NSLog(@"%@",[per objcKeyValue]);
+        
         
         
         
