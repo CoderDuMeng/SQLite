@@ -31,10 +31,15 @@
 
 @property (strong , nonatomic) NSArray *models;
 
-@property (assign , nonatomic) char c1;
+//@property (assign , nonatomic) char c1;
 
 @property (strong, nonatomic) NSDate *date;
 @property (copy, nonatomic) NSString *dates;
+
+
+@property (assign , nonatomic) BOOL is;
+
+@property (assign , nonatomic) bool iss;
 
 
 

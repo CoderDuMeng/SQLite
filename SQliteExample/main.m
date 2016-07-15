@@ -176,20 +176,20 @@ void sqliteToolDeleteAll(){
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        insertObject();
-        
-        sleep(2);
-        
-        
-        getObjectForKey();
-        
-        sleep(2);
-        
-        getObjectAll();
-        
-        
-        
-        sleep(2);
+//        insertObject();
+//        
+//        sleep(2);
+//        
+//        
+//        getObjectForKey();
+//        
+//        sleep(2);
+//        
+//        getObjectAll();
+//        
+//        
+//        
+//        sleep(2);
         
         //2016-07-15 01:03:30 +0000
         //替换属性
@@ -203,7 +203,9 @@ int main(int argc, const char * argv[]) {
                                @"models":@[@"1",@"12",@"1241"],
                                @"c1" : @"1",
                                @"date":@"2016-07-15 01:03:30",
-                               @"dates":[NSDate date]
+                               @"dates":[NSDate date],
+                               @"is":@"YES",
+                               @"iss" :@"yes"
                                
                                
                                };
@@ -214,6 +216,9 @@ int main(int argc, const char * argv[]) {
         
         NSLog(@"ID :  %@ age1 :  %@  age2 :%@  age %zi  url:%@  urls %@ models %@",per.ID, per.age1, per.age2,per.age,per.url,per.urls, per.models);
         
+        
+        
+        NSLog(@"per is  %d",per.is);
         
         
         

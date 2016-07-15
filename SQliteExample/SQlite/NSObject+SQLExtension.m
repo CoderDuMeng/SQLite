@@ -17,6 +17,7 @@ NSString *const typeLong_ = @"l";
 NSString *const typeLongLong_ = @"q";
 NSString *const typeChar_ = @"c";
 NSString *const typeBool_ = @"b";
+NSString *const typebool_ = @"B";
 
 
 
@@ -34,7 +35,6 @@ NSString *const typeBool_ = @"b";
         
         //属性类型
          NSMutableString *type  = [NSMutableString  stringWithUTF8String:ivar_getTypeEncoding(ivar)];
-        
         
         _type = [type mutableCopy];
         //对象类型
@@ -207,31 +207,52 @@ NSString *const typeBool_ = @"b";
         }else{
         
         if ([type isEqualToString:typeInt_]) {
-           ((void(*)(id,SEL,int))(void *)objc_msgSend)(self,selector,[value intValue]);
+         
+            ((void(*)(id,SEL,int))(void *)objc_msgSend)(self,selector,[value intValue]);
+         
         }else if ([type isEqualToString:tyoeFloat_]){
+            
             ((void(*)(id,SEL,float))(void *)objc_msgSend)(self,selector,[value floatValue]);
+        
         }else if ([type isEqualToString:typeDouble_]){
+         
             ((void(*)(id,SEL,double))(void *)objc_msgSend)(self,selector,[value doubleValue]);
-        }else if ([type isEqualToString:typeBool_]){
-            if ([value isKindOfClass:[NSString class]]) {
-                if ([value isEqualToString:@"YES"] || [value isEqualToString:@"yes"]) {
-                    ((void(*)(id,SEL,BOOL))(void *)objc_msgSend)(self,selector,YES);
-                }else if ([value isEqualToString:@"true"] || [value isEqualToString:@"NO"] || [value isEqualToString:@"no"]){
-                    ((void(*)(id,SEL,BOOL))(void *)objc_msgSend)(self,selector,NO);
-                }
-            }else{
-                ((void(*)(id,SEL,BOOL))(void *)objc_msgSend)(self,selector,[value boolValue]);
-            }
+       
+        }else if ([type isEqualToString:typeBool_] ){
+           
+            ((void(*)(id,SEL,BOOL))(void *)objc_msgSend)(self,selector,[value boolValue]);
            
         }else if ([type isEqualToString:typeLongLong_]){
-             ((void(*)(id,SEL,long long))(void *)objc_msgSend)(self,selector,[value longLongValue]);
-        }else if ([type isEqualToString:typeChar_]){
-            if ([value isKindOfClass:[NSNumber class]]) {
-                ((void(*)(id,SEL,char))(void *)objc_msgSend)(self,selector,[value charValue]);
-            }else if ([value isKindOfClass:[NSString class]]){
-                NSString *charStr = (NSString *) value;
-               ((void(*)(id,SEL,char))(void *)objc_msgSend)(self,selector,(char )charStr.UTF8String);
+         
+            ((void(*)(id,SEL,long long))(void *)objc_msgSend)(self,selector,[value longLongValue]);
+        
+         }else if ([type isEqualToString:typeChar_] || [type isEqualToString:typebool_]){
+          
+            if ([value isKindOfClass:[NSString class]]) {
+                
+                if ([value isEqualToString:@"YES"] ||
+                    [value isEqualToString:@"yes"]) {
+                    
+                    ((void(*)(id,SEL,BOOL))(void *)objc_msgSend)(self,selector,1);
+                    
+                }else if ([value isEqualToString:@"true"] ||
+                          [value isEqualToString:@"NO"] ||
+                          [value isEqualToString:@"no"]){
+                   
+                    ((void(*)(id,SEL,BOOL))(void *)objc_msgSend)(self,selector,0);
+                    
+                }else{
+                    
+                    NSString *charStr = (NSString *) value;
+                    
+                    ((void(*)(id,SEL,char))(void *)objc_msgSend)(self,selector,(char )charStr.UTF8String);
+                }
+             
+            }else{
+              ((void(*)(id,SEL,char))(void *)objc_msgSend)(self,selector,[value charValue]);
+                
             }
+            
         }else if ([type isEqualToString:typeLong_]){
             ((void(*)(id,SEL,long))(void *)objc_msgSend)(self,selector,[value longValue]);
         }

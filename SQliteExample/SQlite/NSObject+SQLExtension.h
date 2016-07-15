@@ -13,6 +13,7 @@
 
 
 extern NSString *const typeBool_;
+extern NSString *const typebool_;
 extern NSString *const typeInt_;
 extern NSString *const tyoeFloat_;
 extern NSString *const typeDouble_;
