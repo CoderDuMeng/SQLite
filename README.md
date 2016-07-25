@@ -1,9 +1,16 @@
 #SQLiteSave
 ###1.一行代码存储model类,面向对象存储，无需写一句sql语句
 ###2.模型转换  json -  model   model - json。
-  
+   
+-**里面集成了MMModel轻量级转模型框架  
+-**把Model利用MModel转成json然后存入数据库
+——**数据库读取json数据转成model类型，返回
+
+
+
 # <a id="Examples"></a> Examples【示例】 
-### <a id="Model"></a> The most simple  Model【最简单的数据存储】  
+### <a id="Model"></a> The most simple  Model【最简单的数据存储】    
+
 ```ruby 
 @interface Person01 : NSObject
 @property (copy , nonatomic) NSString *working;
@@ -59,41 +66,8 @@ NSLog(@"删除成功");
 NSLog(@"删除失败");
 } 
 
-
-// 7.支持在model类中实现属性替换
-+(NSDictionary *)replacePropertyName{
-
-return @{@"ID" : @"id",
-@"age1":@"id1",
-@"age2":@"id2"
-
-};
-
-}
-//替换属性
-NSDictionary *dcit = @{
-@"id":@"dumeng",
-@"id1":@"我是id1",
-@"id2":@"我是id2"
-
-
-};
-
-Persion *per = [[Persion alloc] init];
-
-per =  [per objcValuekey:dcit];
-
-NSLog(@"ID :  %@ age1 :  %@  age2 :%@",per.ID, per.age1, per.age2);
-
-
-//其实这个还可以做简单的数据转模型
-
-
-
-
 // 8.更新数据 直接用对应的key在存一下就完全可以
 ```
- 
 
 
  

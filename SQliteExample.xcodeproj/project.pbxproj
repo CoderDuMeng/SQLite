@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		C51C7C091CC9E3DB00186EC2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C551B3CA1CC9B1910091475F /* libsqlite3.tbd */; };
+		C534EDD21D4600A7006B92CA /* NSObject+SQLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C534EDCF1D4600A7006B92CA /* NSObject+SQLExtension.m */; };
+		C534EDD31D4600A7006B92CA /* SQLProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = C534EDD11D4600A7006B92CA /* SQLProperty.m */; };
 		C551B3BD1CC9B11E0091475F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C551B3BC1CC9B11E0091475F /* main.m */; };
 		C551B3C81CC9B1640091475F /* SQLiteTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C551B3C51CC9B1640091475F /* SQLiteTool.m */; };
 		C551B3C91CC9B1640091475F /* SQLObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C551B3C71CC9B1640091475F /* SQLObject.m */; };
 		C551B3CE1CC9B1A20091475F /* Persion.m in Sources */ = {isa = PBXBuildFile; fileRef = C551B3CD1CC9B1A20091475F /* Persion.m */; };
-		C5B400F51D2E3BD800079642 /* NSObject+SQLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B400F41D2E3BD800079642 /* NSObject+SQLExtension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C534EDCD1D4600A7006B92CA /* MMModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMModel.h; sourceTree = "<group>"; };
+		C534EDCE1D4600A7006B92CA /* NSObject+SQLExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SQLExtension.h"; sourceTree = "<group>"; };
+		C534EDCF1D4600A7006B92CA /* NSObject+SQLExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SQLExtension.m"; sourceTree = "<group>"; };
+		C534EDD01D4600A7006B92CA /* SQLProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLProperty.h; sourceTree = "<group>"; };
+		C534EDD11D4600A7006B92CA /* SQLProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLProperty.m; sourceTree = "<group>"; };
+		C534EDD41D4600E0006B92CA /* SQTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQTool.h; sourceTree = "<group>"; };
 		C551B3B91CC9B11E0091475F /* SQliteExample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SQliteExample; sourceTree = BUILT_PRODUCTS_DIR; };
 		C551B3BC1CC9B11E0091475F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C551B3C41CC9B1640091475F /* SQLiteTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLiteTool.h; sourceTree = "<group>"; };
@@ -37,8 +44,6 @@
 		C551B3CA1CC9B1910091475F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		C551B3CC1CC9B1A20091475F /* Persion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Persion.h; sourceTree = "<group>"; };
 		C551B3CD1CC9B1A20091475F /* Persion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Persion.m; sourceTree = "<group>"; };
-		C5B400F31D2E3BD800079642 /* NSObject+SQLExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SQLExtension.h"; sourceTree = "<group>"; };
-		C5B400F41D2E3BD800079642 /* NSObject+SQLExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SQLExtension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +58,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C534EDCC1D4600A7006B92CA /* MMModel */ = {
+			isa = PBXGroup;
+			children = (
+				C534EDCD1D4600A7006B92CA /* MMModel.h */,
+				C534EDCE1D4600A7006B92CA /* NSObject+SQLExtension.h */,
+				C534EDCF1D4600A7006B92CA /* NSObject+SQLExtension.m */,
+				C534EDD01D4600A7006B92CA /* SQLProperty.h */,
+				C534EDD11D4600A7006B92CA /* SQLProperty.m */,
+			);
+			path = MMModel;
+			sourceTree = "<group>";
+		};
 		C551B3B01CC9B11E0091475F = {
 			isa = PBXGroup;
 			children = (
@@ -84,12 +101,12 @@
 		C551B3C31CC9B1640091475F /* SQlite */ = {
 			isa = PBXGroup;
 			children = (
-				C5B400F31D2E3BD800079642 /* NSObject+SQLExtension.h */,
-				C5B400F41D2E3BD800079642 /* NSObject+SQLExtension.m */,
+				C534EDCC1D4600A7006B92CA /* MMModel */,
 				C551B3C41CC9B1640091475F /* SQLiteTool.h */,
 				C551B3C51CC9B1640091475F /* SQLiteTool.m */,
 				C551B3C61CC9B1640091475F /* SQLObject.h */,
 				C551B3C71CC9B1640091475F /* SQLObject.m */,
+				C534EDD41D4600E0006B92CA /* SQTool.h */,
 			);
 			path = SQlite;
 			sourceTree = "<group>";
@@ -150,11 +167,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C534EDD21D4600A7006B92CA /* NSObject+SQLExtension.m in Sources */,
 				C551B3CE1CC9B1A20091475F /* Persion.m in Sources */,
 				C551B3C91CC9B1640091475F /* SQLObject.m in Sources */,
 				C551B3BD1CC9B11E0091475F /* main.m in Sources */,
 				C551B3C81CC9B1640091475F /* SQLiteTool.m in Sources */,
-				C5B400F51D2E3BD800079642 /* NSObject+SQLExtension.m in Sources */,
+				C534EDD31D4600A7006B92CA /* SQLProperty.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

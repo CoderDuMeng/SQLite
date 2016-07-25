@@ -122,7 +122,7 @@
     }
     
     NSMutableDictionary *dictObject = nil;
-    dictObject = [object objcKeyValue];  //模型转成字典
+    dictObject = [object mm_jsonWithModelObject];  //模型转成字典
     NSError *error = nil;
     NSData *data = [NSJSONSerialization dataWithJSONObject:dictObject options:0 error:&error];
     if (error) {
@@ -205,8 +205,7 @@
     NSArray *object = [self getAllObjectfromTableName:tableName];
     NSMutableArray *classObject = [NSMutableArray array];
     for (id obdict in object) {
-        id ob = [[cl alloc] init];
-        [ob objcValuekey:obdict];
+        id ob = [cl mm_ModelObjectWithDictJson:obdict];
         [classObject addObject:ob];
     }
   return classObject;
@@ -216,8 +215,7 @@
     NSString *sql = [NSString stringWithFormat:@"SELECT  *from %@ where id = \"%@\"",tableName,saveID];
    __block id object = nil;
    [self getAllInfoToSql:sql successInfo:^(NSMutableDictionary *intoDict) {
-        object = [[cl alloc]init];
-       [object objcValuekey:intoDict[@"object"]];
+        object = [cl mm_ModelObjectWithDictJson:intoDict[@"object"]];
    }];
     return object;
 }

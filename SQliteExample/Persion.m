@@ -23,11 +23,14 @@
     
     return @{@"ID" : @"id",
              @"age1":@"id1",
-             @"age2":@"id2"
+             @"age2":@"id2",
+             @"age100":@"person.counts.counts.du",
+             @"dumeng":@"person.int.intage.dumeng",
+             @"mutableDict":@"person.mutableDict",
+             @"mutableArray" :@"person.mutableDict.mutableArray"
+             
              
              };
-    
-    
     
 }
 

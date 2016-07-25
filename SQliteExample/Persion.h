@@ -41,6 +41,15 @@
 
 @property (assign , nonatomic) bool iss;
 
+@property (strong, nonatomic) Persion *person;
+
+@property (strong, nonatomic) NSString *age100;
+
+@property (assign, nonatomic) int dumeng;
+
+@property (strong, nonatomic) NSMutableDictionary *mutableDict;
+@property (strong, nonatomic) NSArray *mutableArray;
+
 
 
 //@property (assign ,nonatomic) unsigned long long unsignedvalueLongLong;

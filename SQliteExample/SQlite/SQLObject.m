@@ -19,7 +19,7 @@
 }
 - (NSString *)path{
     NSString *dbPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *tableName = [@"dd" stringByAppendingPathExtension:@"sqlite"];
+    NSString *tableName = [@"mm" stringByAppendingPathExtension:@"sqlite"];
     dbPath =  [dbPath stringByAppendingPathComponent:tableName];
     return dbPath;
 }
@@ -45,7 +45,7 @@
     SQLog(@"not tableName  error : %@ ",[self tableName]);
     return NO;
 }
--(BOOL)dd_insertDataWithId:(NSString *)ID{
+-(BOOL)mm_insertDataWithId:(NSString *)ID{
     SQLiteTool *tool = [[SQLiteTool alloc] initWithdbPath:[self path]];
     [tool createTableWithName:[self getClassName]];
     BOOL isinsert  = [tool insertObject:self intoTableName:[self tableName] intoSaveID:ID];
@@ -57,28 +57,28 @@
     }
     return isinsert;
 }
--(NSArray *)dd_getAllData{
+-(NSArray *)mm_getAllData{
     if (![self dbOpen]) {return nil;}
    NSArray *allObjects = [[self sqliteTool] getAllObjectfromTableName:[self tableName] withClass:self.class];
     return allObjects;
 }
-+(NSArray *)dd_getAllData{
++(NSArray *)mm_getAllData{
     id class = [[self class]new];
-    NSArray *allObjects = [class dd_getAllData];
+    NSArray *allObjects = [class mm_getAllData];
     return allObjects;
 }
--(id)dd_getDataFromId:(NSString *)ID{
+-(id)mm_getDataFromId:(NSString *)ID{
       [self dbOpen];
 
     id selfObject =  [[self sqliteTool] getObjectfromTableName:[self tableName] intoSaveID:ID withClass:[self class]];
     return selfObject;
 }
-+(id)dd_getDataFromId:(NSString *)ID{
++(id)mm_getDataFromId:(NSString *)ID{
     id class = [[self class] new];
-    return [class dd_getDataFromId:ID];
+    return [class mm_getDataFromId:ID];
 }
 
--(BOOL)dd_deleteAll{
+-(BOOL)mm_deleteAll{
     if (![self dbOpen]) {return NO;}
      BOOL isdeleteAll =  [[self sqliteTool] deleteAllObjectfromTableName:[self tableName]];
      if (isdeleteAll == YES) {  //如果删除表的话， 把缓存里面的对应的Key也要删除
@@ -88,22 +88,22 @@
     }
     return isdeleteAll;
 }
-+(BOOL)dd_deleteAll{
++(BOOL)mm_deleteAll{
     id class = [[self class]new];
-    BOOL isdeleteAll = [class dd_deleteAll];
+    BOOL isdeleteAll = [class mm_deleteAll];
     return isdeleteAll;
     
 }
 
--(BOOL)dd_deleteFromId:(NSString *)ID{
+-(BOOL)mm_deleteFromId:(NSString *)ID{
     if (![self dbOpen]) {return NO;}
   BOOL isdeleteID = [[self sqliteTool]deleteObjectfromTableName:[self tableName] SaveID:ID];
   return isdeleteID;
     
 }
-+(BOOL)dd_deleteFromId:(NSString *)ID{
++(BOOL)mm_deleteFromId:(NSString *)ID{
     id class = [[self class]new];
-    BOOL isdeleteID = [class dd_deleteFromId:ID];
+    BOOL isdeleteID = [class mm_deleteFromId:ID];
     return isdeleteID;
 }
 @end
