@@ -4,7 +4,7 @@
    
 -**里面集成了MMModel轻量级转模型框架  
 -**把Model利用MModel转成json然后存入数据库
-——**数据库读取json数据转成model类型，返回
+-**数据库读取json数据转成model类型，返回
 
 
 
