@@ -2,9 +2,9 @@
 ###1.一行代码存储model类,面向对象存储，无需写一句sql语句
 ###2.模型转换  json -  model   model - json。
    
--**里面集成了MMModel轻量级转模型框架  
--**把Model利用MModel转成json然后存入数据库
--**数据库读取json数据转成model类型，返回
+-**里面集成了MMModel轻量级转模型框架**  
+-**把Model利用MModel转成json然后存入数据库**
+-**数据库读取json数据转成model类型，返回**
 
 
 
