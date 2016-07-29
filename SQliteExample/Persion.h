@@ -52,13 +52,6 @@
 
 
 
-//@property (assign ,nonatomic) unsigned long long unsignedvalueLongLong;
-//@property (assign ,nonatomic) unsigned long  unsignedvalueLong;
-//
-//@property  unsigned char unsignedCharValue;
-//@property  unsigned short unsignedShortValue;
-//@property  unsigned int unsignedIntValue;
-
 
 @end
 

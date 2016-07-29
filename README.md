@@ -1,11 +1,10 @@
 #SQLiteSave
-###1.一行代码存储model类,面向对象存储，无需写一句sql语句
-###2.模型转换  json -  model   model - json。
-   
--**里面集成了MMModel轻量级转模型框架  
--**把Model利用MModel转成json然后存入数据库
-——**数据库读取json数据转成model类型，返回
+- **行代码存储model类,面向对象存储，无需写一句sql语句**
 
+   
+   里面集成了MMModel轻量级转模型框架,把Model利用MMModel转成json然后存入数据库
+   数据库读取json数据转成model类型，返回
+   
 
 
 # <a id="Examples"></a> Examples【示例】 

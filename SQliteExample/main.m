@@ -5,11 +5,8 @@
 
 
 #import <Foundation/Foundation.h>  
-#import "SQTool.h" 
-
-
-
-#import "Persion.h"
+#import "SQTool.h"    //导入头文件
+#import "Persion.h"   //模型
 
 
 
@@ -176,7 +173,6 @@ int main(int argc, const char * argv[]) {
         insertObject();
         
         sleep(2);
-        
         
         getObjectForKey();
         
